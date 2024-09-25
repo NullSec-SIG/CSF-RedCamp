@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:9.0
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_USER=npbankadmin
+      - MYSQL_PASSWORD=ilovenullsec2024
+      - MYSQL_DATABASE=bankdb
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
