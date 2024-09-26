@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/lib/pq"
 )
 
 var db *sql.DB
@@ -86,8 +86,8 @@ func dashboardHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Fetch user's balance from the database
 	var balance int
-	query := fmt.Sprintf("SELECT balance FROM users WHERE username = '%s'", username)
-	err = db.QueryRow(query).Scan(&balance)
+	query := "SELECT balance FROM users WHERE username = $1"
+	err = db.QueryRow(query, username).Scan(&balance)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error fetching balance: %v", err), http.StatusInternalServerError)
 		return
@@ -104,7 +104,7 @@ func dashboardHandler(w http.ResponseWriter, r *http.Request) {
 func authenticateUser(username, password string) error {
 	var storedUsername, storedPassword string
 
-	query := fmt.Sprintf("SELECT username, password FROM users WHERE username = ? AND password = '%s'", password)
+	query := "SELECT username, password FROM users WHERE username = $1 AND password = '" + password + "'"
 	err := db.QueryRow(query, username).Scan(&storedUsername, &storedPassword)
 
 	if err != nil {
@@ -157,7 +157,7 @@ func transferHandler(w http.ResponseWriter, r *http.Request) {
 
 func transferFunds(username, recipient, amount string) error {
 	// Check if recipient exists
-	query := "SELECT username FROM users WHERE username = ?"
+	query := "SELECT username FROM users WHERE username = $1"
 	var recipientUsername string
 	err := db.QueryRow(query, recipient).Scan(&recipientUsername)
 	if err == sql.ErrNoRows {
@@ -167,7 +167,7 @@ func transferFunds(username, recipient, amount string) error {
 	}
 
 	// Check if user has enough balance
-	query = "SELECT balance FROM users WHERE username = ?"
+	query = "SELECT balance FROM users WHERE username = $1"
 	var balance float64
 	err = db.QueryRow(query, username).Scan(&balance)
 	if err != nil {
@@ -192,13 +192,13 @@ func transferFunds(username, recipient, amount string) error {
 	}
 	defer tx.Rollback()
 
-	query = "UPDATE users SET balance = balance - ? WHERE username = ?"
+	query = "UPDATE users SET balance = balance - $1 WHERE username = $2"
 	_, err = tx.Exec(query, amountFloat, username)
 	if err != nil {
 		return err
 	}
 
-	query = "UPDATE users SET balance = balance + ? WHERE username = ?"
+	query = "UPDATE users SET balance = balance + $1 WHERE username = $2"
 	_, err = tx.Exec(query, amountFloat, recipient)
 	if err != nil {
 		return err
@@ -228,7 +228,7 @@ func resetHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Reset the database to a clean state
 	db.Exec("DELETE FROM users")
-	db.Exec("ALTER TABLE users AUTO_INCREMENT = 1")
+	db.Exec("ALTER SEQUENCE users_id_seq RESTART WITH 1")
 
 	// Read init.sql and execute each statement
 	initSQL, err := os.ReadFile("init.sql")
@@ -256,7 +256,7 @@ func initDB() error {
 	var err error
 
 	for i := 0; i < 5; i++ {
-		db, err = sql.Open("mysql", "npbankadmin:ilovenullsec2024@tcp(db:3306)/bankdb")
+		db, err = sql.Open("postgres", "host=db port=5432 user=npbankadmin password=ilovenullsec2024 dbname=bankdb sslmode=disable")
 		if err != nil {
 			time.Sleep(5 * time.Second)
 			continue

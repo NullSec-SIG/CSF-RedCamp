@@ -7,11 +7,10 @@ services:
       - db
 
   db:
-    image: mysql:9.0
+    image: postgres:17rc1-alpine
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
-      - MYSQL_USER=npbankadmin
-      - MYSQL_PASSWORD=ilovenullsec2024
-      - MYSQL_DATABASE=bankdb
+      - POSTGRES_USER=npbankadmin
+      - POSTGRES_PASSWORD=ilovenullsec2024
+      - POSTGRES_DB=bankdb
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
