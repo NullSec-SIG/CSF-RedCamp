@@ -12,11 +12,9 @@ function handleTogglePassword() {
   let passwordFieldType = passwordField.getAttribute("type");
 
   if (passwordFieldType === "password") {
-    console.log(1);
     passwordField.setAttribute("type", "text");
     this.textContent = "Hide";
   } else {
-    console.log(2);
     passwordField.setAttribute("type", "password");
     this.textContent = "Show";
   }
