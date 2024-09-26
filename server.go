@@ -152,7 +152,7 @@ func transferHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	http.Redirect(w, r, "/dashboard?success=Funds%20transferred%20successfully", http.StatusSeeOther)
 }
 
 func transferFunds(username, recipient, amount string) error {
