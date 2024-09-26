@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>NPBank - NullSec x RED Camp</title>
-</head>
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
 
-<body>
+  <body>
     <h1>NP Bank Transfer</h1>
     <p id="balance"></p>
-    <div id="error-message" style="color: red; display: none;"></div>
+    <div id="error-message" style="color: red; display: none"></div>
     <form method="POST" action="/transfer">
-        <input type="text" name="recipient" placeholder="Recipient">
-        <input type="text" name="amount" placeholder="Amount" id="amount">
-        <input type="submit" value="Transfer">
+      <input type="text" name="recipient" placeholder="Recipient" />
+      <input type="text" name="amount" placeholder="Amount" id="amount" />
+      <input type="submit" value="Transfer" />
     </form>
-</body>
-<script src="static/js/dashboard.js"></script>
-
+  </body>
+  <script src="static/js/dashboard.js"></script>
 </html>
