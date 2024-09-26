@@ -2,19 +2,44 @@
 <html>
   <head>
     <title>NPBank - NullSec x RED Camp</title>
-    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="static/css/dashboard.css" />
   </head>
 
   <body>
-    <h1>NP Bank Transfer</h1>
-    <p id="balance"></p>
-    <div id="success-message" style="color: green; display: none"></div>
-    <div id="error-message" style="color: red; display: none"></div>
-    <form method="POST" action="/transfer">
-      <input type="text" name="recipient" placeholder="Recipient" />
-      <input type="text" name="amount" placeholder="Amount" id="amount" />
-      <input type="submit" value="Transfer" />
-    </form>
+    <div class="transfer-container">
+      <h1>NP Bank Transfer</h1>
+      <p id="balance"></p>
+      <div id="success-message" style="color: green; display: none"></div>
+      <div id="error-message" style="color: red; display: none"></div>
+      <form method="POST" action="/transfer">
+        <div class="input-container">
+          <div class="input-section">
+            <label for="recipient">Recipient:</label>
+            <input
+              type="text"
+              name="recipient"
+              id="recipient"
+              placeholder="Enter recipient name"
+              required
+            />
+          </div>
+          <div class="input-section">
+            <label for="amount">Amount:</label>
+            <input
+              type="number"
+              name="amount"
+              id="amount"
+              placeholder="Enter amount"
+              min="1"
+              step="0.01"
+              required
+            />
+          </div>
+        </div>
+
+        <input type="submit" value="Transfer" />
+      </form>
+    </div>
   </body>
   <script src="static/js/dashboard.js"></script>
 </html>
