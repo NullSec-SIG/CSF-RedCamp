@@ -2,15 +2,22 @@
 <html>
     <head>
         <title>NPBank - NullSec x RED Camp</title>
-        <link rel="stylesheet" href="../css/login.css">
+        <link rel="stylesheet" href="static/css/login.css">
     </head>
     <body>
-        <h1>NP Bank Login</h1>
-        <form method="POST" action="/login">
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Login">
-        </form>
+        <div class="login-container">
+            <h1>NP Bank Login</h1>
+            <form method="POST" action="/login">
+                <div class="input-section">
+                    <input type="text" name="username" placeholder="Username">
+                </div>
+                <div class="input-section">
+                    <input type="password" name="password" placeholder="Password" class="password-field">
+                    <button type="button" id="toggle-password" class="toggle-password">Show</button>
+                </div>
+                <input type="submit" value="Login">
+            </form>
+        </div>
         <script src="static/js/index.js"></script>
     </body>
 </html>

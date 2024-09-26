@@ -152,7 +152,7 @@ func transferHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+	http.Redirect(w, r, "/dashboard?success=Funds%20transferred%20successfully", http.StatusSeeOther)
 }
 
 func transferFunds(username, recipient, amount string) error {
@@ -287,8 +287,8 @@ func main() {
 
 	http.HandleFunc("/reset", resetHandler)
 
-	fmt.Printf("Server started at port 8080\n")
-	if err := http.ListenAndServe("0.0.0.0:8080", nil); err != nil {
+	fmt.Printf("Server started at port 80\n")
+	if err := http.ListenAndServe("0.0.0.0:80", nil); err != nil {
 		log.Fatal(err)
 	}
 }

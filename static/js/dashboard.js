@@ -30,7 +30,18 @@ function displayErrorMessage() {
     }
 }
 
+function displaySuccessMessage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = urlParams.get('success');
+    if (successMessage) {
+        const successElement = document.getElementById('success-message');
+        successElement.textContent = decodeURIComponent(successMessage);
+        successElement.style.display = 'block';
+    }
+}
+
 window.onload = () => {
     displayErrorMessage();
+    displaySuccessMessage();
     getBalance();
 }
