@@ -1,7 +1,7 @@
 const urlParams = new URLSearchParams(window.location.search);
 const error = urlParams.get("error");
 if (error) {
-  document.write('<p style="color: red;">' + error + "</p>");
+  document.write('<p style="color: red; margin-top: 10px;">' + error + "</p>");
 }
 
 //Handle password visibility toggling
