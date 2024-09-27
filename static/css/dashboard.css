@@ -14,6 +14,40 @@ body {
   color: #333;
 }
 
+.account-container {
+  top: 0;
+  position: absolute;
+  right: 0;
+  font-weight: bold;
+  background: white;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.account-container p {
+  margin-bottom: 0;
+}
+
+.account-container button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.account-container button:hover {
+  background-color: #0056b3
+}
+
 .transfer-container {
   background-color: #ffffff;
   padding: 30px;

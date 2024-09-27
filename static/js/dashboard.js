@@ -46,8 +46,22 @@ function displaySuccessMessage() {
   }
 }
 
+function displayUsername() {
+  const username = getCookies(document.cookie).login.split(":")[0];
+  const usernameElement = document.getElementById("welcome-message");
+  usernameElement.textContent = `Welcome, ${username}!`;
+}
+
+function logout() {
+  document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+  window.location.href = "/";
+}
+
+document.getElementById("logout-button").addEventListener("click", logout);
+
 window.onload = () => {
   displayErrorMessage();
   displaySuccessMessage();
   getBalance();
+  displayUsername();
 };
