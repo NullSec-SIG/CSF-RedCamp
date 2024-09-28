@@ -6,6 +6,7 @@ Lab created to teach students web vulnerabilities.
 
 - [x] Add success message once transfer is complete
 - [ ] Beautify up the UI
+- [ ] Obfuscate the SQL init file so that participants can't see
 
 ## To Consider
 
