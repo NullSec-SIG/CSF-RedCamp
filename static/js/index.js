@@ -1,23 +1,23 @@
 const urlParams = new URLSearchParams(window.location.search);
 const error = urlParams.get("error");
 if (error) {
-  document.write('<p style="color: red; margin-top: 10px;">' + error + "</p>");
+    const errorMessageDiv = document.getElementById('error-message');
+    errorMessageDiv.textContent = error; 
 }
 
 //Handle password visibility toggling
 
-let togglePassword = document.querySelector(".toggle-password");
-function handleTogglePassword() {
-  let passwordField = document.querySelector(".password-field");
-  let passwordFieldType = passwordField.getAttribute("type");
+function togglePassword() {
+  const passwordInput = document.getElementById('password');
+  const toggleIcon = document.getElementById('toggle-icon');
 
-  if (passwordFieldType === "password") {
-    passwordField.setAttribute("type", "text");
-    this.textContent = "Hide";
+  if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      toggleIcon.classList.remove('fa-eye');
+      toggleIcon.classList.add('fa-eye-slash');
   } else {
-    passwordField.setAttribute("type", "password");
-    this.textContent = "Show";
+      passwordInput.type = 'password';
+      toggleIcon.classList.remove('fa-eye-slash');
+      toggleIcon.classList.add('fa-eye');
   }
 }
-
-togglePassword.addEventListener("click", handleTogglePassword);
