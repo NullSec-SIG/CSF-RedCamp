@@ -1,28 +1,16 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: 'Georgia', 'Times New Roman', serif !important;
   margin: 0;
 }
 
 .background {
-  background-image: url('static/img/bg/np_campus.jpg');
+  background-image: url('/static/img/bg/np_campus.jpg');
   background-size: cover;
   background-position: center;
   height: 100%;
 }
 
-.frost {
-  background-color: rgba(255, 255, 255, 0.5); 
-  backdrop-filter: blur(10px);
-  border-radius: 10px;
-}
-
 .navbar {
-  background-color: rgba(255, 255, 255, 0.5); 
+  background-color: rgba(255, 255, 255, 0.8); 
   backdrop-filter: blur(10px); 
 }
