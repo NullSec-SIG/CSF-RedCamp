@@ -11,7 +11,7 @@ function getBalance() {
   var balance = parseInt(getCookies(document.cookie).balance);
   document.getElementById(
     "balance"
-  ).innerHTML = `Balance: $${balance.toLocaleString("en-US", {
+  ).innerHTML = `$${balance.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
@@ -47,7 +47,7 @@ function displaySuccessMessage() {
 }
 
 function displayUsername() {
-  const username = getCookies(document.cookie).login.split(":")[0];
+  const username = getCookies(document.cookie).login.split(":")[0].replace("\"", "");
   const usernameElement = document.getElementById("welcome-message");
   usernameElement.textContent = `Welcome, ${username}!`;
 }
