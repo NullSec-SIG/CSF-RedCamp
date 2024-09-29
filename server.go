@@ -32,6 +32,11 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "static/html/index.html")
 }
 
+func aboutHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, "static/html/about.html")
+}
+
+
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "POST" {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -281,6 +286,7 @@ func main() {
 	http.Handle("/static/", http.StripPrefix("/static/", fileServer))
 
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/about", aboutHandler)
 	http.HandleFunc("/login", loginHandler)
 	http.HandleFunc("/dashboard", dashboardHandler)
 	http.HandleFunc("/transfer", transferHandler)
