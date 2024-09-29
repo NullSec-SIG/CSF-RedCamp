@@ -1,8 +1,9 @@
 function congrats() {
-  var amount = document.getElementById("amount").value;
+  const cookies = getCookies(document.cookie);
+  var amount = parseInt(cookies.balance);
   amount = parseInt(amount);
 
-  if (document.cookie.includes("george_lim") && amount > 1_337_000) {
+  if (document.cookie.includes("john_tan") && amount > 1_337_000) {
     alert("Congratulations! You've successfully hacked NPBank!");
   }
 }
@@ -74,6 +75,7 @@ function logout() {
 document.getElementById("logout-button").addEventListener("click", logout);
 
 window.onload = () => {
+  congrats();
   displayErrorMessage();
   displaySuccessMessage();
   getBalance();
