@@ -57,12 +57,43 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get the current last_login timestamp
+	var lastLogin time.Time
+	err := db.QueryRow("SELECT last_login FROM users WHERE username = $1", username).Scan(&lastLogin)
+	if err != nil {
+		fmt.Println("Error fetching last_login:", err)
+		http.Redirect(w, r, "/?error=Failed+to+fetch+last+login", http.StatusSeeOther)
+		return
+	}
+
+	// Update last_login timestamp to the current time
+	loc, err := time.LoadLocation("Asia/Singapore")
+	if err != nil {
+		log.Fatal(err)
+	}
+	currentTime := time.Now().In(loc)
+
+	// Update the last_login in the database with the current time
+	_, err = db.Exec("UPDATE users SET last_login = $1 WHERE username = $2", currentTime, username)
+	if err != nil {
+		fmt.Println("Error updating last_login:", err)
+		http.Redirect(w, r, "/?error=Failed+to+update+last+login", http.StatusSeeOther)
+		return
+	}
+
 	cookie := http.Cookie{
 		Name:  "login",
 		Value: fmt.Sprintf("%s:%s", username, password),
 	}
-
 	http.SetCookie(w, &cookie)
+
+	// Save the last login time in a cookie
+	lastLoginCookie := http.Cookie{
+		Name:  "last_login",
+		Value: lastLogin.Format("2 Jan 2006, 15:04"), 
+	}
+	http.SetCookie(w, &lastLoginCookie)
+
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }
 
@@ -98,13 +129,17 @@ func dashboardHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	_, err = r.Cookie("last_login")
+
 	balCookie := http.Cookie{
 		Name:  "balance",
 		Value: strconv.Itoa(balance),
 	}
 	http.SetCookie(w, &balCookie)
+
 	http.ServeFile(w, r, "static/html/dashboard.html")
 }
+
 
 func authenticateUser(username, password string) error {
 	var storedUsername, storedPassword string
