@@ -3,7 +3,7 @@ const getCookies = (cookieStr) =>
     .split(";")
     .map((str) => str.trim().split(/=(.+)/))
     .reduce((acc, curr) => {
-      acc[curr[0]] = curr[1];
+      acc[curr[0]] = curr[1] ? decodeURIComponent(curr[1].replace(/^"|"$/g, "")) : "";
       return acc;
     }, {});
 
@@ -57,6 +57,7 @@ function confetti() {
 
 const cookies = getCookies(document.cookie);
 var amount = parseInt(cookies.balance);
+var lastLogin = cookies.last_login;
 
 if (document.cookie.includes("john_tan") && amount > 1_337_000) {
   confetti();
@@ -79,6 +80,10 @@ function getBalance() {
       maximumFractionDigits: 2,
     }
   )}`;
+}
+
+function getLastLogin() {
+  document.getElementById("last-login").innerHTML = `${lastLogin}`;
 }
 
 function displayErrorMessage() {
@@ -132,5 +137,6 @@ window.onload = () => {
   displayErrorMessage();
   displaySuccessMessage();
   getBalance();
+  getLastLogin();
   displayUsername();
 };
